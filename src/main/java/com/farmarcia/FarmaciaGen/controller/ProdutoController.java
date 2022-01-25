@@ -1,8 +1,8 @@
 package com.farmarcia.FarmaciaGen.controller;
 
 /*
- * @author Guilherme Barbosa Rodrigues
- * @since 24/01/2022
+ * @author Guilherme Barbosa Rodrigues.
+ * @since 25/01/2022
  * @version 0.01
  */
 
@@ -11,6 +11,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +27,7 @@ import com.farmarcia.FarmaciaGen.Repository.ProdutoRepository;
 
 @RestController
 @RequestMapping("/produto")
+@CrossOrigin("*")
 public class ProdutoController {
 
 	@Autowired
@@ -36,7 +38,7 @@ public class ProdutoController {
 		return ResponseEntity.ok(repository.findAll());
 	}
 
-	@GetMapping("/produto/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<Produto> findByNome(@PathVariable(value = "id") long id) {
 		return repository.findById(id).map(resp -> ResponseEntity.status(200).body(resp)).orElseGet(() -> {
 			throw new ResponseStatusException(HttpStatus.NO_CONTENT, "ID não encontrado");
@@ -58,7 +60,7 @@ public class ProdutoController {
 		return ResponseEntity.status(200).body(repository.save(nome));
 	}
 
-	@DeleteMapping("/id")
+	@DeleteMapping("/{id}")
 	public void deleteNome(@PathVariable long id) {
 		repository.deleteById(id);
 	}
